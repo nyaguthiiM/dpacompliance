@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="websockerUrl" content="{{ websockerUrl() }}">
+  <title> {{ title }} </title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/skin-purple.css">
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+  {% block css %}{% endblock %}
+  <style>
+    a.nostyle:link {
+      text-decoration: inherit;
+      color: inherit;
+      cursor: auto;
+    }
+
+    a.nostyle:visited {
+      text-decoration: inherit;
+      color: inherit;
+      cursor: auto;
+    }
+  </style>
+  <link rel="stylesheet" href="/css/AdminLTE.min.css">
+
+</head>
+<body class="hold-transition skin-purple sidebar-mini">
+  <div class="wrapper">
+    <header class="main-header">
+      <a href="/" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini">F-D</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg">Flow-D</span>
+      </a>
+      <nav class="navbar navbar-static-top" >
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+          <span class="sr-only">Toggle navigation</span>
+        </a>
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <li class="dropdown notifications-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bullhorn"></i>
+                <span data-notification="true" class="label label-primary">0</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="header">You have <span data-notification="true" >0</span> notifications</li>
+                <li>
+                  <ul id="notification_area" class="menu"></ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <aside class="main-sidebar">
+      <section class="sidebar">
+        <ul class="sidebar-menu tree" data-widget="tree">
+          <li class="header">Operations</li>
+          <li>
+            <a href="/data_assets">
+              <i class="fa fa-table" aria-hidden="true"></i>
+              <span>Data Asset Inventory</span>
+            </a>
+          </li>
+          <li>
+            <a href="/flow-map">
+              <i class="fa fa-map-signs" aria-hidden="true"></i>
+              <span>Graph Generation</span>
+            </a>
+          </li>
+        </ul>
+      </section>
+    </aside>
+    <div class="content-wrapper">
+      <section class="content-header"><h1>{{ title }}</h1></section>
+      <section class="content">
+        <div id="notification_message" class="row" style="display:none">
+          <div class="col-xs-12">
+            <div data-notification-success="true" class="callout callout-success">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <h4><i class="icon fa fa-check"></i> Sucess!</h4>
+              <span id="sucess_message"></span>
+            </div>
+            <div data-notification-error="true" class="callout callout-danger">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <h4><i class="icon fa fa-warning"></i> Error!</h4>
+              <span id="error_message" ></span>
+            </div>
+          </div>
+        </div>
+        <form id="upload_form" type="multipart/form-data" data-csrf="{{csrfToken}}" method="post" action="/data_assets" style="display:none" >
+          <input id="excell_upload" type="file" name="data_assets"/>
+        </form>
+          {% block content %}{% endblock %}
+      </section>
+    </div>
+  </div>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/adminlte.min.js"></script>
+  <script src="/js/moment.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+
+    $(document).ready(function(){
+
+      var socketioUrl=$('meta[name="websockerUrl"]').attr('content');
+      var socket=io(socketioUrl);
+
+      socket.on('read-complete',function(version){
+        console.log(version);
+        sucessMessageNotification('Inserting the excell file with version '+version.version_name+' has been completed.');
+      })
+
+      socket.on('insert-error',function(version,error){
+        errorMessageNotification('Cannot insert the '+version.version_name);
+      });
+
+      $('#excell_upload').on('change',function(event){
+        event.preventDefault();
+        var formData = new FormData($("#upload_form")[0]);
+
+        $.ajax({
+          'type':$("#upload_form").attr('method'),
+          'data': formData,
+          'url': $("#upload_form").attr('action'),
+          'processData': false,
+          'contentType': false,
+          'mimeType': 'multipart/form-data',
+          'headers': {"X-CSRF-Token": $("#upload_form").attr('data-csrf') },
+          'beforeSend': function (x) {
+             if (x && x.overrideMimeType) {
+                 x.overrideMimeType("multipart/form-data");
+            }
+            $('#trigger_upload').addClass('disabled');
+          },
+          'success':function(data){
+            data=JSON.parse(data);
+            $('#upload_form').attr('data-csrf',data.csrfToken)
+            if(data.status===true){
+              sucessMessageNotification("Excell file uploaded, it's contents will be available sortly");
+            } else {
+              errorMessageNotification(data.message);
+            }
+          },
+          'error':function(jqXHR,status,errorThrown){
+            if(jqXHR.status===403){
+              errorMessageNotification("Upload failed, please refresh the page in order to solve it");
+            } else {
+              errorMessageNotification("Upload failed, please try again later");
+            }
+          },
+          'complete':function(){
+            $('#trigger_upload').removeClass('disabled');
+          },
+          timeout: 3000
+        });
+      });
+
+    })
+
+    function errorMessageNotification(message){
+      insertNotification("<li class=\"text-danger\"><i class=\"fa fa-warning\"></i>&nbsp;"+message+"</li>");
+      displayMessage(true,message);
+    }
+
+    function sucessMessageNotification(message){
+      insertNotification("<li class=\"text-success\"><i class=\"fa fa-check\"></i>&nbsp;"+message+"</li>");
+      displayMessage(false,message);
+    }
+
+    function insertNotification(notificationHtml){
+      $("#notification_area").prepend(notificationHtml);
+      var notifications=$("#notification_area").children().length;
+      $("span[data-notification]").text(notifications);
+    }
+
+    function displayMessage(isError,message){
+      $("#notification_message").hide();
+      if(isError){
+        $("#error_message").text(message);
+        $("div[data-notification-success]").hide();
+        $("div[data-notification-error]").show();
+      } else {
+        $("#sucess_message").text(message);
+        $("div[data-notification-error]").hide();
+        $("div[data-notification-success]").show();
+      }
+
+      $("#notification_message").show();
+      setTimeout(function(){
+        $("#notification_message").hide();
+      },2500)
+    }
+
+    function versionSearchByDate(onItemClickCallback){
+      $.getScript('/js/bootstrap-datepicker.min.js',function(data, textStatus, jqxhr ){
+        $('input[data-use="version_selector"]').datepicker({
+          format:{
+            toDisplay:function(date, format, language){
+                return moment(new Date(date)).format('D/M/YYYY');
+            },
+            toValue:function(date,format,language){
+              return new Date(date);
+            }
+          },
+          title: 'Click To Select a version',
+          todayHighlight: true
+        }).on('changeDate',function(event){
+          var value=moment(new Date(event.date)).format('D/M/YYYY')
+          ajaxGetVersions(value,onItemClickCallback);
+        });
+      }).fail(function(){
+        errorMessageNotification("Failed to load some scripts please refresh your browsers tab");
+      });
+    }
+
+    function ajaxGetVersions(searchTerm,onItemClickCallback){
+      $.get('/versions',{'version':searchTerm}).done(function(data){
+        $('ul[data-use="version_display"]').html("");
+        console.log(data.length);
+
+        if(data.length > 0){
+          data.forEach(function(obj){
+            var item=$(document.createElement('li'))
+
+            item.text(moment.utc(obj.utcMilis).format('ddd D/M/YYYY H:m'));
+            item.attr('data-version',obj.name);
+            item.on('click',function(event){
+              event.preventDefault();
+              var item=event.target;
+              var value=$(item).attr('data-version');
+              onItemClickCallback(value);
+            });
+            $('ul[data-use="version_display"]').append(item);
+          });
+        } else {
+          var item=$(document.createElement('li'))
+          item.text("No Data found");
+          $('ul[data-use="version_display"]').append(item);
+        }
+      }).fail(function(xhqr){
+        if(xhr.status==400){
+          errorMessageNotification('Please select a version in order to display the info');
+        } else {
+          errorMessageNotification('Could not fetch the versions due to an internal error');
+        }
+      })
+    }
+  </script>
+  {% block javascripts %}{% endblock %}
+</body>
+</html>

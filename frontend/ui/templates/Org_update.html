@@ -1,0 +1,396 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+	<body id="bg" style="background-image: url('{% static "img/pop-bg.jpg"%}')" ;>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300">
+		<!-- Google web font "Open Sans" -->
+		<!--    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >                                  &lt;!&ndash; https://getbootstrap.com/ &ndash;&gt;-->
+		<!--    <link rel="stylesheet" href="{% static 'fontawesome/css/fontawesome-all.min.css' %}">                &lt;!&ndash; https://fontawesome.com/ &ndash;&gt;-->
+		<!--    <link rel="stylesheet" type="{% static 'text/css" href="slick/slick.css' %}"/>                       &lt;!&ndash; http://kenwheeler.github.io/slick/ &ndash;&gt;-->
+		<!--    <link rel="stylesheet" type="{% static 'text/css" href="slick/slick-theme.css' %}"/>-->
+		<link rel="stylesheet" href="{% static 'css/tooplate-style.css' %}">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-4 col-sm-4 col-xs-12"></div>
+				<div class="col-md-4 col-sm-4 col-xs-12">
+					<div class="jumbotron" style="margin-top:150px">
+						<title>
+							Update Account
+						</title>
+						<div class="page-row account-header">
+						</div>
+						<form action="" method="POST">
+							{%csrf_token%}
+							<table>
+								<tr colspan=2>
+									<input name="__RequestVerificationToken" type="hidden"
+										value="mlC73U4sBDUbZz-KV6KLEz9-NY_MQjolVnRhpLx2NFAx3aJTyaR0Iolj7xH7QEwGWeysk84AoUr6OavOH9NqlhzPfBI1" />
+									<div class="form account-form">
+										<h2 class="group-header form-header account-header">
+											Address book
+										</h2>
+
+										<div class="form-text account-text">
+										</div>
+
+										<div class="account-form-wrap">
+											<div class="form account-form">
+												<div class="row">
+													<div class="col-sm-6 col-md-5 col-lg-4">
+														<div
+															class="first-name form-group-medium form-group has-feedback">
+															<label class="form-label form-label-required" name=username
+																for="username">
+																<span
+																	class="form-label-prefix form-label-prefix-required"></span>
+																<span class="form-label-wrap">Username</span>
+																<!--                                        <span class="form-label-suffix form-label-suffix-required">(required)</span>-->
+															</label>
+															<div class="entry-feedback-wrapper">
+																<input autocomplete="orgname"
+																	class="form-control text-box single-line"
+																	data-val="true"
+																	data-val-length="Your name must be 100 characters or less"
+																	data-val-length-max="100"
+																	data-val-required="Please enter organisation name"
+																	id="username" maxlength="100" name="username"
+																	required="required" type="text" value="{% if user.is_authenticated %}{{ user.username }}{%endif%}" />
+																<i class="fa form-control-feedback"></i>
+															</div> <span
+																class="field-validation-valid form-validation-message"
+																data-valmsg-for="username"
+																data-valmsg-replace="true"></span>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-6 col-md-5 col-lg-4">
+													<!--								<div class="last-name form-group-medium form-group has-feedback"><label class="form-label form-label-required" for="Account_LastName"><span class="form-label-prefix form-label-prefix-required"></span><span class="form-label-wrap">Your Last Name</span><span class="form-label-suffix form-label-suffix-required">(required)</span></label>  <div class="entry-feedback-wrapper"><input autocomplete="family-name" class="form-control text-box single-line" data-val="true" data-val-length="Your last name must be 100 characters or less" data-val-length-max="100" data-val-required="Please enter last name" id="Account_LastName" maxlength="100" name="Account.LastName" required="required" type="text" value="" /> <i class="fa form-control-feedback"></i></div> <span class="field-validation-valid form-validation-message" data-valmsg-for="Account.LastName" data-valmsg-replace="true"></span> </div>-->
+
+
+													<div class="account-form-wrap">
+														<div class="row">
+															<div class="col-sm-6 col-md-5 col-lg-4">
+																<div
+																	class="email form-group-medium form-group has-feedback">
+																	<label class="form-label form-label-required"
+																		for="Account_Email">
+																		<span
+																			class="form-label-prefix form-label-prefix-required"></span>
+																		<span class="form-label-wrap">Email</span>
+																		<!--                                        <span class="form-label-suffix form-label-suffix-required">(required)</span>-->
+																	</label>
+																	<div class="entry-feedback-wrapper">
+																		<input autocomplete="email"
+																			class="form-control text-box single-line"
+																			data-val="true"
+																			data-val-length="Your email address must be 100 characters or less"
+																			data-val-length-max="100"
+																			data-val-regex="Please enter a valid email address"
+																			data-val-regex-pattern="^.+@.+\..+$"
+																			data-val-required="Please enter your email address"
+																			id="Account_Email" maxlength="100"
+																			name="Account.Email" required="required"
+																			type="email" value="{% if user.is_authenticated %}{{ user.email }}{%endif%}" /> <i
+																			class="fa form-control-feedback"></i></div>
+																	<span
+																		class="field-validation-valid form-validation-message"
+																		data-valmsg-for="Account.Email"
+																		data-valmsg-replace="true"></span>
+																</div>
+															</div>
+														</div>
+
+														<div class="form account-form">
+															<div class="row">
+
+																<div class="col-sm-6 col-md-5 col-lg-4">
+																	<!--								<div class="last-name form-group-medium form-group has-feedback"><label class="form-label form-label-required" for="Account_LastName"><span class="form-label-prefix form-label-prefix-required"></span><span class="form-label-wrap">Your Last Name</span><span class="form-label-suffix form-label-suffix-required">(required)</span></label>  <div class="entry-feedback-wrapper"><input autocomplete="family-name" class="form-control text-box single-line" data-val="true" data-val-length="Your last name must be 100 characters or less" data-val-length-max="100" data-val-required="Please enter last name" id="Account_LastName" maxlength="100" name="Account.LastName" required="required" type="text" value="" /> <i class="fa form-control-feedback"></i></div> <span class="field-validation-valid form-validation-message" data-valmsg-for="Account.LastName" data-valmsg-replace="true"></span> </div>-->
+																</div>
+
+																<div class="account-form-wrap">
+																	<div class="form account-form">
+																		<div class="row">
+																			<div class="col-sm-6 col-md-5 col-lg-4">
+																				<div
+																					class="first-name form-group-medium form-group has-feedback">
+																					<label
+																						class="form-label form-label-required"
+																						for="Address">
+																						<span
+																							class="form-label-prefix form-label-prefix-required"></span>
+																						<span
+																							class="form-label-wrap">Address</span>
+																						<!--                                        <span class="form-label-suffix form-label-suffix-required">(required)</span>-->
+																					</label>
+																					<div class="entry-feedback-wrapper">
+																						<input autocomplete="given-name"
+																							class="form-control text-box single-line"
+																							data-val="true"
+																							data-val-length="Your address must be 100 characters or less"
+																							data-val-length-max="100"
+																							data-val-required="Please enter Address"
+																							id="address" maxlength="100"
+																							name="address"
+																							required="required"
+																							type="text" type="text"
+																							value="" />
+																						<i
+																							class="fa form-control-feedback"></i>
+																					</div> <span
+																						class="field-validation-valid form-validation-message"
+																						data-valmsg-for="address"
+																						data-valmsg-replace="true"></span>
+																				</div>
+																			</div>
+																			<div class="col-sm-6 col-md-5 col-lg-4">
+																				<!--								<div class="last-name form-group-medium form-group has-feedback"><label class="form-label form-label-required" for="Account_LastName"><span class="form-label-prefix form-label-prefix-required"></span><span class="form-label-wrap">Your Last Name</span><span class="form-label-suffix form-label-suffix-required">(required)</span></label>  <div class="entry-feedback-wrapper"><input autocomplete="family-name" class="form-control text-box single-line" data-val="true" data-val-length="Your last name must be 100 characters or less" data-val-length-max="100" data-val-required="Please enter last name" id="Account_LastName" maxlength="100" name="Account.LastName" required="required" type="text" value="" /> <i class="fa form-control-feedback"></i></div> <span class="field-validation-valid form-validation-message" data-valmsg-for="Account.LastName" data-valmsg-replace="true"></span> </div>-->
+																			</div>
+
+																			<div class="account-form-wrap">
+																				<div class="form account-form">
+																					<div class="row">
+																						<div
+																							class="col-sm-6 col-md-5 col-lg-4">
+																							<div
+																								class="first-name form-group-medium form-group has-feedback">
+																								<label
+																									class="form-label form-label-required"
+																									for="industry">
+																									<span
+																										class="form-label-prefix form-label-prefix-required"></span>
+																									<span
+																										class="form-label-wrap">Industry</span>
+																									<!--                                        <span class="form-label-suffix form-label-suffix-required">(required)</span>-->
+																								</label>
+																								<div
+																									class="entry-feedback-wrapper">
+																									<input
+																										autocomplete="given-name"
+																										class="form-control text-box single-line"
+																										data-val="true"
+																										data-val-length="Your name must be 100 characters or less"
+																										data-val-length-max="100"
+																										data-val-required="Please enter industry name"
+																										id="industry"
+																										maxlength="100"
+																										name="industry"
+																										required="required"
+																										type="text"
+																										value="" />
+																									<i
+																										class="fa form-control-feedback"></i>
+																								</div> <span
+																									class="field-validation-valid form-validation-message"
+																									data-valmsg-for="industry"
+																									data-valmsg-replace="true"></span>
+																							</div>
+																						</div>
+																						<div
+																							class="col-sm-6 col-md-5 col-lg-4">
+																							<!--								<div class="last-name form-group-medium form-group has-feedback"><label class="form-label form-label-required" for="Account_LastName"><span class="form-label-prefix form-label-prefix-required"></span><span class="form-label-wrap">Your Last Name</span><span class="form-label-suffix form-label-suffix-required">(required)</span></label>  <div class="entry-feedback-wrapper"><input autocomplete="family-name" class="form-control text-box single-line" data-val="true" data-val-length="Your last name must be 100 characters or less" data-val-length-max="100" data-val-required="Please enter last name" id="Account_LastName" maxlength="100" name="Account.LastName" required="required" type="text" value="" /> <i class="fa form-control-feedback"></i></div> <span class="field-validation-valid form-validation-message" data-valmsg-for="Account.LastName" data-valmsg-replace="true"></span> </div>-->
+																						</div>
+
+																					</div>
+																					<div class="row">
+																						<div
+																							class="col-sm-6 col-md-5 col-lg-4">
+																							<div
+																								class="phone form-group-medium form-group has-feedback">
+																								<label
+																									class="form-label form-label-required"
+																									for="phone">
+																									<span
+																										class="form-label-prefix form-label-prefix-required"></span>
+																									<span
+																										class="form-label-wrap">Phone</span>
+																									<!--                                        <span class="form-label-suffix form-label-suffix-required">(required)</span>-->
+																								</label>
+																								<div
+																									class="entry-feedback-wrapper">
+																									<input
+																										autocomplete="phone"
+																										class="form-control text-box single-line"
+																										data-val="true"
+																										data-val-length="Your phone  must be 100 characters or less"
+																										data-val-length-max="100"
+																										data-val-regex="Please enter a valid email address"
+																										data-val-regex-pattern="^.+@.+\..+$"
+																										data-val-required="Please enter your phone number"
+																										id="phone"
+																										maxlength="100"
+																										name="phone"
+																										required="required"
+																										type="text"
+																										value="" /> <i
+																										class="fa form-control-feedback"></i>
+																								</div> <span
+																									class="field-validation-valid form-validation-message"
+																									data-valmsg-for="Account.Email"
+																									data-valmsg-replace="true"></span>
+																							</div>
+																						</div>
+																					</div>
+
+																					<div
+																						class="col-sm-6 col-md-5 col-lg-4">
+																						<div
+																							class="password-two form-group-medium form-group has-feedback">
+																							<label
+																								class="form-label form-label-required"
+																								for="Account_PasswordConfirmation">
+																								<span
+																									class="form-label-prefix form-label-prefix-required"></span>
+																								<span
+																									class="form-label-wrap">Controller</span>
+																								<!--                                        <span class="form-label-suffix form-label-suffix-required">(required)</span-->
+																							</label>
+																							<div
+																								class="entry-feedback-wrapper">
+																								<input
+																									autocomplete="off"
+																									class="form-control text-box single-line password"
+																									data-val="true"
+																									data-val-equalto="The password and the confirmation password do not match."
+																									data-val-equalto-other="*.Password"
+																									r
+																									data-val-length="Your password must be 50 characters or less"
+																									data-val-length-max="50"
+																									data-val-required="Please confirm your password."
+																									id="controller	"
+																									maxlength="50"
+																									name="controller"
+																									required="required"
+																									type="text"
+																									value="" /> <i
+																									class="fa form-control-feedback"></i>
+																							</div> <span
+																								class="field-validation-valid form-validation-message"
+																								data-valmsg-for="Account.PasswordConfirmation"
+																								data-valmsg-replace="true"></span>
+																						</div>
+																					</div>
+																				</div>
+																				<div class="account-form-wrap">
+																					<div class="form account-form">
+																						<div class="row">
+																							<div
+																								class="col-sm-6 col-md-5 col-lg-4">
+																								<div
+																									class="first-name form-group-medium form-group has-feedback">
+																									<label
+																										class="form-label form-label-required"
+																										for="Account_FirstName">
+																										<span
+																											class="form-label-prefix form-label-prefix-required"></span>
+																										<span
+																											class="form-label-wrap">Processor</span>
+																										<!--                                        <span class="form-label-suffix form-label-suffix-required">(required)</span>-->
+																									</label>
+																									<div
+																										class="entry-feedback-wrapper">
+																										<input
+																											autocomplete="given-name"
+																											class="form-control text-box single-line"
+																											data-val="true"
+																											data-val-length="Your first name must be 100 characters or less"
+																											data-val-length-max="100"
+																											data-val-required="Please enter first name"
+																											id="Account_FirstName"
+																											maxlength="100"
+																											name="processor"
+																											required="required"
+																											type="text"
+																											value="" />
+																										<i
+																											class="fa form-control-feedback"></i>
+																									</div> <span
+																										class="field-validation-valid form-validation-message"
+																										data-valmsg-for="Account.FirstName"
+																										data-valmsg-replace="true"></span>
+																								</div>
+																							</div>
+																							<div
+																								class="col-sm-6 col-md-5 col-lg-4">
+																								<!--								<div class="last-name form-group-medium form-group has-feedback"><label class="form-label form-label-required" for="Account_LastName"><span class="form-label-prefix form-label-prefix-required"></span><span class="form-label-wrap">Your Last Name</span><span class="form-label-suffix form-label-suffix-required">(required)</span></label>  <div class="entry-feedback-wrapper"><input autocomplete="family-name" class="form-control text-box single-line" data-val="true" data-val-length="Your last name must be 100 characters or less" data-val-length-max="100" data-val-required="Please enter last name" id="Account_LastName" maxlength="100" name="Account.LastName" required="required" type="text" value="" /> <i class="fa form-control-feedback"></i></div> <span class="field-validation-valid form-validation-message" data-valmsg-for="Account.LastName" data-valmsg-replace="true"></span> </div>-->
+																							</div>
+
+																							<!--						<div class="phone form-group-small form-group has-feedback">-->
+																							<!--                            <label class="form-label form-label-required" for="Account_Phone">-->
+																							<!--                                <span class="form-label-prefix form-label-prefix-required"></span>-->
+																							<!--                                <span class="form-label-wrap">Address</span>-->
+																							<!--&lt;!&ndash;                                <span class="form-label-suffix form-label-suffix-required">(required)</span>&ndash;&gt;-->
+																							<!--                            </label> <span class="whats-this js-whats-this" data-content="We will only use your phone number to contact you with questions about your order" data-original-title="" data-placement="auto top" rel="popover" tabindex="0"><i class="fa fa-question-circle"></i></span> <div class="entry-feedback-wrapper"><input aria-describedby="phone-whatsthis-screen-reader" autocomplete="tel" class="form-control text-box single-line" data-val="true" data-val-length="Your phone number must be 25 characters or less" data-val-length-max="25" data-val-required="Phone Number is Required" id="Account_Phone" maxlength="25" name="Account.Phone" required="required" type="text" value="" /> <i class="fa form-control-feedback"></i></div> <span class="field-validation-valid form-validation-message" data-valmsg-for="Account.Phone" data-valmsg-replace="true"></span> </div>-->
+
+																							<div
+																								class="account-form-wrap">
+																								<t
+																									class="form account-form">
+																									<div class="row">
+																										<div
+																											class="col-sm-6 col-md-5 col-lg-4">
+																											<div
+																												class="first-name form-group-medium form-group has-feedback">
+																												<label
+																													class="form-label form-label-required"
+																													for="Account_FirstName">
+																													<span
+																														class="form-label-prefix form-label-prefix-required"></span>
+																													<span
+																														class="form-label-wrap">Location</span>
+																													<!--                                        <span class="form-label-suffix form-label-suffix-required">(required)</span>-->
+																												</label>
+																												<div
+																													class="entry-feedback-wrapper">
+																													<input
+																														autocomplete="given-name"
+																														class="form-control text-box single-line"
+																														data-val="true"
+																														data-val-length="Your first name must be 100 characters or less"
+																														data-val-length-max="100"
+																														data-val-required="Please enter first name"
+																														id="Account_FirstName"
+																														maxlength="100"
+																														name="location"
+																														required="required"
+																														type="text"
+																														value="" />
+																													<i
+																														class="fa form-control-feedback"></i>
+																												</div>
+																												<span
+																													class="field-validation-valid form-validation-message"
+																													data-valmsg-for="Account.FirstName"
+																													data-valmsg-replace="true"></span>
+																											</div>
+																										</div>
+																										<div
+																											class="col-sm-6 col-md-5 col-lg-4">
+																											<!--								<div class="last-name form-group-medium form-group has-feedback"><label class="form-label form-label-required" for="Account_LastName"><span class="form-label-prefix form-label-prefix-required"></span><span class="form-label-wrap">Your Last Name</span><span class="form-label-suffix form-label-suffix-required">(required)</span></label>  <div class="entry-feedback-wrapper"><input autocomplete="family-name" class="form-control text-box single-line" data-val="true" data-val-length="Your last name must be 100 characters or less" data-val-length-max="100" data-val-required="Please enter last name" id="Account_LastName" maxlength="100" name="Account.LastName" required="required" type="text" value="" /> <i class="fa form-control-feedback"></i></div> <span class="field-validation-valid form-validation-message" data-valmsg-for="Account.LastName" data-valmsg-replace="true"></span> </div>-->
+																										</div>
+																										<!--						<span id="phone-whatsthis-screen-reader" class="screen-reader-only">We will only use your phone number to contact you with questions about your order</span>-->
+
+																										<!--<div class="form-group over-thirteen">-->
+																										<!--    <div><label class="checkbox-label" for="Account_IsOver13"><input class="check-box" data-val="true" data-val-requirechecked="You Must Be Over 13 To Purchase or have Parental Consent" id="Account_IsOver13" name="Account.IsOver13" type="checkbox" value="true" /><input name="Account.IsOver13" type="hidden" value="false" /> I am over 13 years old </label></div> <span class="field-validation-valid form-validation-message" data-valmsg-for="Account.IsOver13" data-valmsg-replace="true"></span> </div>-->
+																										<!--						<div class="form-group okay-to-email hide"><div><label class="checkbox-label" for="Account_IsOkToEmail"><input aria-describedby="account_isoktoemail_description" class="check-box" id="Account_IsOkToEmail" name="Account.IsOkToEmail" type="checkbox" value="true" /><input name="Account.IsOkToEmail" type="hidden" value="false" /> OK To Email </label></div> <span class="field-validation-valid form-validation-message" data-valmsg-for="Account.IsOkToEmail" data-valmsg-replace="true"></span> <div class="form-description" id="account_isoktoemail_description">(May we contact you with product updates/information, etc.?)</div></div>-->
+
+																										<!--					</div>-->
+																										<!--				</div>-->
+																										<div
+																											class="page-action-bar create-account-actions">
+																											<input
+																												type="submit"
+																												class="btn btn-primary create-account-button"
+																												value="Update Account" />
+																										</div>
+																									</div>
+								</tr>
+							</table>
+						</form>
+
+					</div>
+	</body>
+
+</html>
